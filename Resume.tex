@@ -1,0 +1,199 @@
+% created by Kyle Johnston
+% last update: 2014-08-07
+
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=1.0in]{geometry}
+\pagestyle{empty}% no page numbers
+\usepackage[parfill]{parskip}% no indent before each paragraph
+\setlength{\parskip}{0pt}% spacing between paragraphs
+\usepackage{amssymb}% AMS symbol library
+\usepackage{amsmath}% math tools
+\usepackage{graphicx}% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+
+%% HEADERS
+\newcommand{\objectivewidth}{0.18\textwidth}% width of objective minipage
+\newcommand{\GapOne}{12pt}% defines spacing before level 1
+\newcommand{\GapTwo}{6pt}% defines spacing before level 2
+\setcounter{secnumdepth}{0}% removes header numbering but not bookmarks
+\usepackage{titlesec}% allows changing of headings
+\titleformat*{\section}{\bfseries}% makes \section like normal text but bold
+\titlespacing{\section}{0pt}{\GapOne}{0pt}% alters the following for \section: left indent, whitespace above, whitespace below
+
+%% MISCELLANEOUS AND FORMATTING
+\RequirePackage[l2tabu, orthodox]{nag}% checks for outdated packages
+\usepackage{bookmark}% improves bookmarking capabilities of hyperref
+\usepackage{hyperref}% creates hyperlinks and enables \url{URL} (special font and allows line-breaking)
+\usepackage{microtype}% improves spacing
+\usepackage{calc}% enables math operations, which are used for lengths
+\hfuzz=33pt% allows set amount of overflow before displaying overfull \hbox error
+
+
+%% SHORTCUTS
+\newcommand{\bt}{$\bullet$}
+
+
+%% CATEGORIES
+
+\newcommand{\sect}[1]% use for a new level 1 category
+	{
+	\section{{#1}}
+	\hrule
+	}
+	
+\newcommand{\sectlist}[1]% use for a new level 1 category that goes straight to itemize
+	{
+	\section{{#1}}
+	\hrule
+	\vspace{\GapTwo}% gap to account for \hrule
+	}
+	
+\newcommand{\school}[4]% use for a level 2 item that is a school; inputs are school name, major, graduation date, GPA
+	{
+	\vspace{\GapTwo}% gap to account for \hrule
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushleft}
+			\textbf{{#1}}% school name
+		\end{flushleft}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushright}
+			{#3}% graduation date
+		\end{flushright}
+	\end{minipage}
+	
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushleft}
+			{#2}% major
+		\end{flushleft}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushright}
+			{#4}% GPA
+		\end{flushright}
+	\end{minipage}
+	}
+	
+\newcommand{\entry}[4]% use for a level 2 item; inputs are name, position, location, dates
+	{
+	\vspace{\GapTwo}% gap to account for \hrule
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushleft}
+			\textbf{{#1}}% name
+		\end{flushleft}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushright}
+			{#3}% location
+		\end{flushright}
+	\end{minipage}
+	
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushleft}
+			\textit{#2}% position
+		\end{flushleft}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushright}
+			{#4}% dates
+		\end{flushright}
+	\end{minipage}
+	}
+
+
+%% HELP
+
+% copy and paste the following
+
+%\school{SCHOOL NAME}
+%{MAJOR}
+%{GRADUATION DATE}
+%{GPA}
+%\begin{itemize}
+%\item BEGIN ITEM
+%\item BEGIN ITEM
+%\end{itemize}
+
+%\entry{NAME}
+%{POSITION}
+%{LOCATION}
+%{DATES}
+%\begin{itemize}
+%\item BEGIN ITEM
+%\item BEGIN ITEM
+%\end{itemize}
+
+
+\title{Resume}
+\author{Your Name}
+\date{}
+
+
+\begin{document}
+
+
+\begin{center}
+\huge \textbf{Your Name}% name
+\end{center}
+\hrule
+\vspace{3pt}
+\begin{center}
+\normalsize street address \bt\ city, state zip \bt\ phone number \bt\ email% contact information
+\end{center}
+
+
+\begin{minipage}{\objectivewidth}
+	\section{OBJECTIVE}
+\end{minipage}
+\hfill
+\begin{minipage}{\textwidth - \objectivewidth}
+	\vspace{\GapOne}
+	your objective here
+	\vspace{\GapOne}
+\end{minipage}
+
+
+\sect{EDUCATION}
+
+\school{your school}
+{your major}
+{Expected Graduation/Graduated: month, year}
+{GPA: X.XX / 4.00}
+\begin{itemize}
+\item more details
+\end{itemize}
+
+
+\sect{EXPERIENCE}
+
+\entry{company name}
+{your title}
+{company location}
+{dates worked}
+\begin{itemize}
+\item more details
+\end{itemize}
+
+
+\sectlist{SKILLS}
+
+\begin{itemize}
+\item skill
+\end{itemize}
+
+
+\sect{ACTIVITIES}
+
+\entry{activity name}
+{your role}
+{activity location}
+{dates involved}
+\begin{itemize}
+\item more details
+\end{itemize}
+
+
+\end{document}
