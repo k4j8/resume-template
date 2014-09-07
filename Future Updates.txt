@@ -1,4 +1,9 @@
 Future Updates
 
+none
+
+
+Completed Updates
+
 in MakePlainTextResume.py,
 adjust code so that “your name” is automatically filled with name in resume
