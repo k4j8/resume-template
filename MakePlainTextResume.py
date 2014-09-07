@@ -1,12 +1,13 @@
 # created by Kyle Johnston
-# last update: 2014-08-07
+# last update: 2014-09-07
 
 import Tkinter, tkFileDialog
 
 root = Tkinter.Tk()
 root.withdraw()
 
-file_path = tkFileDialog.askopenfilename()
+file_path = '/Users/johnstonkylew/Google Drive/Applications/1 Resume/Resume.tex'
+#file_path = tkFileDialog.askopenfilename()
 
 import sys, fileinput, re
 
@@ -15,14 +16,19 @@ def RemoveBrackets(newline):
     return p.sub(r'\1', newline)
 
 ActiveFileR = open(file_path, 'r')
-ActiveFileW = open(file_path[:len(file_path)-4] + ' Plain Text' + file_path[len(file_path)-4:], 'w')
+ActiveFileW = open(file_path[:len(file_path)-4] + ' Plain Text.txt', 'w')
 
 DocumentStart = False # becomes true after reaching \begin{document}
 PrintLineCounter = 0 # indicates how many lines should be printed without consideration
 LineCountDown = 0 # indicates how many lines to wait before printing a line without consideration
 
 # name
-ActiveFileW.write('Your Name\n\n')
+p = re.compile(r'\\author\{([^}]*)}')
+for i, line in enumerate(ActiveFileR):
+    if p.search(line):
+        newline = p.sub(r'\1', line)
+        ActiveFileW.write(newline + '\n\n')
+        break
 
 for i, line in enumerate(ActiveFileR):
     if DocumentStart == False and line.find('\\begin{document}') == -1:
