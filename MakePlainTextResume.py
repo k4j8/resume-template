@@ -1,13 +1,12 @@
 # created by Kyle Johnston
-# last update: 2014-09-07
+# last update: 2014-11-16
 
 import Tkinter, tkFileDialog
 
 root = Tkinter.Tk()
 root.withdraw()
 
-file_path = '/Users/johnstonkylew/Google Drive/Applications/1 Resume/Resume.tex'
-#file_path = tkFileDialog.askopenfilename()
+file_path = tkFileDialog.askopenfilename()
 
 import sys, fileinput, re
 
