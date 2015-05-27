@@ -1,5 +1,5 @@
-# created by Kyle Johnston
-# last update: 2014-11-16
+# created by Kyle Johnston on 2014-08-01
+# last update: 2015-05-27
 
 import Tkinter, tkFileDialog
 
