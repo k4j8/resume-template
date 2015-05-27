@@ -18,6 +18,8 @@ ActiveFileR = open(file_path, 'r')
 ActiveFileW = open(file_path[:len(file_path)-4] + ' Plain Text.txt', 'w')
 
 DocumentStart = False # becomes true after reaching \begin{document}
+AddressStart = False # becomes true after starting address entry
+AddressEnd = False # becomes false after finishing address entry
 PrintLineCounter = 0 # indicates how many lines should be printed without consideration
 LineCountDown = 0 # indicates how many lines to wait before printing a line without consideration
 
@@ -35,6 +37,7 @@ for i, line in enumerate(ActiveFileR):
     else: # document has started, begin writing
         DocumentStart = True
         PrintLine = False
+        AddressUpdated = False
         newline = line
         if PrintLineCounter != 0:
             newline = RemoveBrackets(newline)
@@ -53,12 +56,19 @@ for i, line in enumerate(ActiveFileR):
             newline = p.sub(r'', newline)
 
         # address and contact information
-        p = re.compile(r'\\normalsize (.+)')
-        if p.search(newline):
-            newline = p.sub(r'\1\n', newline)
-            newline = newline.replace(' \\bt\\ ', '\n')
-            newline = RemoveBrackets(newline)
-            PrintLine = True
+        if AddressEnd == False:
+            p = re.compile(r'\\bt\\')
+            if p.search(newline):
+                AddressStart = True
+                AddressUpdated = True
+                newline = newline.replace(' \\bt\\', '')
+                newline = RemoveBrackets(newline)
+                PrintLine = True
+                PrintLineCounter = 1
+
+        # check if done with address incase \bt\ used later in file
+        if AddressStart == True and AddressUpdated == False:
+            AddressEnd = True
 
         # sections and entries
         headings = ['section', 'sect', 'sectlist']
