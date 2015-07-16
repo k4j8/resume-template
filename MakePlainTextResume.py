@@ -1,5 +1,5 @@
 # created by Kyle Johnston on 2014-08-01
-# last update: 2015-05-27
+# last update: 2015-07-15
 
 import Tkinter, tkFileDialog
 
@@ -14,12 +14,12 @@ def RemoveBrackets(newline):
     p = re.compile(r'\{([^}]*)\}') # remove brackets
     return p.sub(r'\1', newline)
 
-ActiveFileR = open(file_path, 'r')
-ActiveFileW = open(file_path[:len(file_path)-4] + ' Plain Text.txt', 'w')
+ActiveFileR = open(file_path, 'r') # LaTeX resume
+ActiveFileW = open(file_path[:len(file_path)-4] + ' Plain Text.txt', 'w') # plain text resume to save as
 
 DocumentStart = False # becomes true after reaching \begin{document}
 AddressStart = False # becomes true after starting address entry
-AddressEnd = False # becomes false after finishing address entry
+AddressEnd = False # becomes true after finishing address entry
 PrintLineCounter = 0 # indicates how many lines should be printed without consideration
 LineCountDown = 0 # indicates how many lines to wait before printing a line without consideration
 
@@ -32,18 +32,22 @@ for i, line in enumerate(ActiveFileR):
         break
 
 for i, line in enumerate(ActiveFileR):
+
     if DocumentStart == False and line.find('\\begin{document}') == -1:
         pass
     else: # document has started, begin writing
-        DocumentStart = True
+        DocumentStart = True # makes above if statement always false
         PrintLine = False
         AddressUpdated = False
         newline = line
         if PrintLineCounter != 0:
+            # print line without consideration; take 1 off of PrintLineCounter
             newline = RemoveBrackets(newline)
             PrintLine = True
             PrintLineCounter -= 1
+
         if LineCountDown != 0:
+            # take 1 off of LineCountDown; print line if LineCountDown is 0
             LineCountDown -= 1
             if LineCountDown == 0: # when countdown reaches 0, print
                 p = re.compile(r'[^\S]*(.*)') # remove leading spaces
