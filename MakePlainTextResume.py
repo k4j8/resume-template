@@ -58,6 +58,9 @@ for i, line in enumerate(ActiveFileR):
         p = re.compile(r'%.*')
         if p.search(newline):
             newline = p.sub(r'', newline)
+            if AddressStart == True and AddressEnd == False:
+                AddressUpdated = True # prevents accidental skipping of address
+                PrintLine = False # prevents printing a blank line
 
         # address and contact information
         if AddressEnd == False:
