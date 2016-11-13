@@ -1,5 +1,5 @@
-% created by Kyle Johnston
-% last update: 2014-08-07
+% Created by Kyle Johnston
+% Last update: 2016-11-13
 
 \documentclass[10pt,letterpaper]{article}
 \usepackage[margin=1.0in]{geometry}
@@ -39,14 +39,14 @@
 	\section{{#1}}
 	\hrule
 	}
-	
+
 \newcommand{\sectlist}[1]% use for a new level 1 category that goes straight to itemize
 	{
 	\section{{#1}}
 	\hrule
 	\vspace{\GapTwo}% gap to account for \hrule
 	}
-	
+
 \newcommand{\school}[4]% use for a level 2 item that is a school; inputs are school name, major, graduation date, GPA
 	{
 	\vspace{\GapTwo}% gap to account for \hrule
@@ -61,7 +61,7 @@
 			{#3}% graduation date
 		\end{flushright}
 	\end{minipage}
-	
+
 	\begin{minipage}{0.5\textwidth}
 		\begin{flushleft}
 			{#2}% major
@@ -74,7 +74,7 @@
 		\end{flushright}
 	\end{minipage}
 	}
-	
+
 \newcommand{\entry}[4]% use for a level 2 item; inputs are name, position, location, dates
 	{
 	\vspace{\GapTwo}% gap to account for \hrule
@@ -89,7 +89,7 @@
 			{#3}% location
 		\end{flushright}
 	\end{minipage}
-	
+
 	\begin{minipage}{0.5\textwidth}
 		\begin{flushleft}
 			\textit{#2}% position
