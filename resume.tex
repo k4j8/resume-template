@@ -1,10 +1,10 @@
 % Created by Kyle Johnston
-% Last update: 2016-11-13
+% Last update: 2018-09-08
 
 \documentclass[10pt,letterpaper]{article}
 \usepackage[margin=1.0in]{geometry}
 \pagestyle{empty}% no page numbers
-\usepackage[parfill]{parskip}% no indent before each paragraph
+\usepackage{parskip}% no indent before each paragraph
 \setlength{\parskip}{0pt}% spacing between paragraphs
 \usepackage{amssymb}% AMS symbol library
 \usepackage{amsmath}% math tools
@@ -20,12 +20,16 @@
 \titlespacing{\section}{0pt}{\GapOne}{0pt}% alters the following for \section: left indent, whitespace above, whitespace below
 
 %% MISCELLANEOUS AND FORMATTING
-\RequirePackage[l2tabu, orthodox]{nag}% checks for outdated packages
+\renewcommand*{\familydefault}{\sfdefault}% changes font to sans serif
 \usepackage{bookmark}% improves bookmarking capabilities of hyperref
 \usepackage{hyperref}% creates hyperlinks and enables \url{URL} (special font and allows line-breaking)
 \usepackage{microtype}% improves spacing
 \usepackage{calc}% enables math operations, which are used for lengths
 \hfuzz=33pt% allows set amount of overflow before displaying overfull \hbox error
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{multirow}
+\setlength{\textfloatsep}{0pt}
 
 
 %% SHORTCUTS
@@ -44,63 +48,27 @@
 	{
 	\section{{#1}}
 	\hrule
-	\vspace{\GapTwo}% gap to account for \hrule
+	\vspace{\GapTwo}% gap to account for \hrule (one column list only)
 	}
 
 \newcommand{\school}[4]% use for a level 2 item that is a school; inputs are school name, major, graduation date, GPA
 	{
 	\vspace{\GapTwo}% gap to account for \hrule
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushleft}
-			\textbf{{#1}}% school name
-		\end{flushleft}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushright}
-			{#3}% graduation date
-		\end{flushright}
-	\end{minipage}
-
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushleft}
-			{#2}% major
-		\end{flushleft}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushright}
-			{#4}% GPA
-		\end{flushright}
-	\end{minipage}
+	\textbf{{#1}} \hfill {#3}\\% school and graduation date
+	{#2} \hfill {#4}% major and GPA
 	}
 
-\newcommand{\entry}[4]% use for a level 2 item; inputs are name, position, location, dates
+\newcommand{\entry}[4]% use for a level 2 item; inputs are company, position, location, dates
 	{
 	\vspace{\GapTwo}% gap to account for \hrule
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushleft}
-			\textbf{{#1}}% name
-		\end{flushleft}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushright}
-			{#3}% location
-		\end{flushright}
-	\end{minipage}
+	\textbf{{#1}}\\% company
+	\textit{#2} \textit{(#3)} \hfill {#4}% position, location, dates
+	}
 
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushleft}
-			\textit{#2}% position
-		\end{flushleft}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.5\textwidth}
-		\begin{flushright}
-			{#4}% dates
-		\end{flushright}
-	\end{minipage}
+\newcommand{\role}[3]% use for continuing a level 2 item; inputs are position, location, dates
+	{
+	\vspace{\GapTwo}% gap to account for \hrule
+	\textit{#1} \textit{(#2)} \hfill {#3}% position, location, dates
 	}
 
 
@@ -126,23 +94,44 @@
 %\item BEGIN ITEM
 %\end{itemize}
 
+%\role{POSITION}
+%{DATES}
+%\begin{itemize}
+%\item BEGIN ITEM
+%\item BEGIN ITEM
+%\end{itemize}
+
+
+%% PERSONAL INFO
+\newcommand{\name}{Your Name}
+\newcommand{\addressone}{street address}
+\newcommand{\addresstwo}{city, state zip}
+\newcommand{\phone}{phone}
+\newcommand{\email}{email}
+
+
+\usepackage{calc}
+\newlength{\shiftdown}
+\setlength{\shiftdown}{\heightof{\addressone}-\heightof{\Huge\bfseries \name}}
+
 
 \title{Resume}
-\author{Your Name}
+\author{\name}
 \date{}
+
 
 
 \begin{document}
 
 
-\begin{center}
-\huge \textbf{Your Name}% name
-\end{center}
-\hrule
-\vspace{3pt}
-\begin{center}
-\normalsize street address \bt\ city, state zip \bt\ phone number \bt\ email% contact information
-\end{center}
+\begin{table}
+\begin{tabularx}{\hsize}[t]{@{}Xr@{}}
+\multirow{1}{*}[\shiftdown]{\Huge\bfseries \name} & \addressone \\
+& \addresstwo \\
+& \phone \\
+& \email
+\end{tabularx}
+\end{table}
 
 
 \begin{minipage}{\objectivewidth}

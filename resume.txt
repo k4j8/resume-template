@@ -1,0 +1,46 @@
+Your Name
+street address
+city, state zip
+phone
+email
+
+
+OBJECTIVE
+
+your objective here
+
+
+
+EDUCATION
+
+your school
+
+your major
+Expected Graduation/Graduated: month, year
+GPA: X.XX / 4.00
+more details
+
+
+EXPERIENCE
+
+company name
+
+your title
+company location
+dates worked
+more details
+
+
+SKILLS
+
+skill
+
+
+ACTIVITIES
+
+activity name
+
+your role
+activity location
+dates involved
+more details
