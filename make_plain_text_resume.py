@@ -1,45 +1,47 @@
-# Created by Kyle Johnston on 2014-08-01
-# Last update: 2018-09-08
+#!/usr/bin/env python
+"""Create plain text resume from LaTeX file"""
+import re
+
 
 # Get resume from user
 from tkinter.filedialog import askopenfilename
 file_path = askopenfilename()
 
 
-import re
-
 def RemoveBrackets(newline):
-    p = re.compile(r'\{([^}]*)\}') # remove brackets
+    """Returns line without brackets"""
+    p = re.compile(r'\{([^}]*)\}')
     return p.sub(r'\1', newline)
 
-ActiveFileR = open(file_path, 'r') # LaTeX resume
-ActiveFileW = open(file_path[:len(file_path)-4] + '.txt', 'w') # plain text resume to save as
 
-DocumentStart = False # becomes true after reaching \begin{document}
-PrintLineCounter = 0 # indicates how many lines should be printed without consideration
-LineCountDown = 0 # indicates how many lines to wait before printing a line without consideration
+ActiveFileR = open(file_path, 'r')  # LaTeX resume
+ActiveFileW = open(file_path[:len(file_path)-4] + '.txt', 'w')  # plain text resume to save as
+
+document_start = False  # becomes true after reaching \begin{document}
+print_line_counter = 0  # indicates how many lines should be printed without consideration
+line_count_down = 0  # indicates how many lines to wait before printing a line without consideration
 
 for i, line in enumerate(ActiveFileR):
 
-    if DocumentStart == False and line.find('%% PERSONAL INFO') == -1:
+    if not document_start and line.find('%% PERSONAL INFO') == -1:
         pass
-    else: # document has started, begin writing
-        DocumentStart = True # makes above 'if' statement always false
-        PrintLine = False
+    else:  # document has started, begin writing
+        document_start = True  # makes above 'if' statement always false
+        print_line = False
         newline = line
-        if PrintLineCounter != 0:
-            # Print line without consideration; take 1 off of PrintLineCounter
+        if print_line_counter != 0:
+            # Print line without consideration; take 1 off of print_line_counter
             newline = RemoveBrackets(newline)
-            PrintLine = True
-            PrintLineCounter -= 1
+            print_line = True
+            print_line_counter -= 1
 
-        if LineCountDown != 0:
-            # Take 1 off of LineCountDown; print line if LineCountDown is 0
-            LineCountDown -= 1
-            if LineCountDown == 0: # when countdown reaches 0, print
-                p = re.compile(r'[^\S]*(.*)') # remove leading spaces
+        if line_count_down != 0:
+            # Take 1 off of line_count_down; print line if line_count_down is 0
+            line_count_down -= 1
+            if line_count_down == 0:  # when countdown reaches 0, print
+                p = re.compile(r'[^\S]*(.*)')  # remove leading spaces
                 newline = p.sub(r'\1\n', newline)
-                PrintLine = True
+                print_line = True
 
         # Remove comments
         p = re.compile(r'%.*')
@@ -50,44 +52,44 @@ for i, line in enumerate(ActiveFileR):
         p = re.compile(r'\\newcommand{\\(.+?)}{(.+?)}')
         if p.search(newline):
             newline = p.sub(r'\2', newline)
-            PrintLine = True
+            print_line = True
 
         # Objective
         p = re.compile(r'\\section{OBJECTIVE}')
         if p.search(newline):
             newline = '\n\nOBJECTIVE\n\n'
-            PrintLine = True
-            LineCountDown = 5
+            print_line = True
+            line_count_down = 5
 
         # sect
         p = re.compile(r'[^\\]*\\' + 'sect' +'\{([^}]*)\}') # finds initial spaces, backslash, header, open bracket, text, close braket
         if p.search(newline):
-            newline = p.sub(r'\n\n\1', newline) # print only text from above
-            PrintLine = True
+            newline = p.sub(r'\n\n\1', newline)  # print only text from above
+            print_line = True
 
         # sectlist
-        p = re.compile(r'[^\\]*\\' + 'sectlist' +'\{([^}]*)\}') # finds initial spaces, backslash, header, open bracket, text, close braket
+        p = re.compile(r'[^\\]*\\' + 'sectlist' +'\{([^}]*)\}')  # finds initial spaces, backslash, header, open bracket, text, close braket
         if p.search(newline):
-            newline = p.sub(r'\n\n\1\n', newline) # print only text from above
-            PrintLine = True
+            newline = p.sub(r'\n\n\1\n', newline)  # print only text from above
+            print_line = True
 
         # Entries
         entries = ['entry', 'school']
         for entry in entries:
-            p = re.compile(r'[^\\]*\\' + entry +'\{([^}]*)\}') # finds initial spaces, backslash, header, open bracket, text, close braket
+            p = re.compile(r'[^\\]*\\' + entry +'\{([^}]*)\}')  # finds initial spaces, backslash, header, open bracket, text, close braket
             if p.search(newline):
-                newline = p.sub(r'\n\1\n', newline) # print only text from above
-                PrintLine = True
-                PrintLineCounter = 3
+                newline = p.sub(r'\n\1\n', newline)  # print only text from above
+                print_line = True
+                print_line_counter = 3
 
         # Items
         p = re.compile(r'\\item (.*)')
         if p.search(newline):
             newline = p.sub(r'\1', newline)
-            PrintLine = True
+            print_line = True
 
         # Backslashes
         newline = newline.replace('\\', '')
 
-        if PrintLine:
+        if print_line:
             ActiveFileW.write(newline)
