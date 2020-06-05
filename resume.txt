@@ -11,6 +11,7 @@ your objective here
 
 
 
+
 EDUCATION
 
 your school
@@ -22,6 +23,13 @@ more details
 
 
 EXPERIENCE
+
+company name
+
+your title
+company location
+dates worked
+more details
 
 company name
 

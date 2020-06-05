@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 """Create plain text resume from LaTeX file"""
+import os
 import re
 
 
 # Get resume from user
-from tkinter.filedialog import askopenfilename
-file_path = askopenfilename()
+CONFIG = 'resume_path.cfg'
+if os.path.isfile(CONFIG):
+    with open(CONFIG, 'r') as config_file:
+        file_path = config_file.read().strip()
+else:
+    from tkinter.filedialog import askopenfilename
+    file_path = askopenfilename()
 
 
 def RemoveBrackets(newline):
@@ -29,13 +35,16 @@ for i, line in enumerate(ActiveFileR):
         document_start = True  # makes above 'if' statement always false
         print_line = False
         newline = line
-        if print_line_counter != 0:
+
+        if print_line_counter > 0:
             # Print line without consideration; take 1 off of print_line_counter
             newline = RemoveBrackets(newline)
+            if print_line_counter == 2:
+                location = newline
             print_line = True
             print_line_counter -= 1
 
-        if line_count_down != 0:
+        if line_count_down > 0:
             # Take 1 off of line_count_down; print line if line_count_down is 0
             line_count_down -= 1
             if line_count_down == 0:  # when countdown reaches 0, print
@@ -79,8 +88,20 @@ for i, line in enumerate(ActiveFileR):
             p = re.compile(r'[^\\]*\\' + entry +'\{([^}]*)\}')  # finds initial spaces, backslash, header, open bracket, text, close braket
             if p.search(newline):
                 newline = p.sub(r'\n\1\n', newline)  # print only text from above
+                company = newline
                 print_line = True
                 print_line_counter = 3
+
+        # Roles
+        p = re.compile(r'[^\\]*\\' + 'role' +'\{([^}]*)\}')  # finds initial spaces, backslash, header, open bracket, text, close braket
+        if p.search(newline):
+            ActiveFileW.write(company[:-1])
+            newline = p.sub(r'\n\1\n', newline)  # print only text from above
+            ActiveFileW.write(newline[:-1])
+            ActiveFileW.write(location)
+            print_line = True
+            print_line_counter = 1
+            continue
 
         # Items
         p = re.compile(r'\\item (.*)')

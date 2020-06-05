@@ -1,3 +1,6 @@
 .*
 !/.gitignore
 tags
+*.aux
+*.log
+*.cfg

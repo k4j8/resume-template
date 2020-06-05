@@ -9,8 +9,8 @@
 
 %% HEADERS
 \newcommand{\objectivewidth}{0.18\textwidth} % width of objective minipage
-\newcommand{\GapOne}{12pt} % defines spacing before level 1
-\newcommand{\GapTwo}{6pt} % defines spacing before level 2
+\newcommand{\GapOne}{20pt} % defines spacing before level 1
+\newcommand{\GapTwo}{12pt} % defines spacing before level 2
 \setcounter{secnumdepth}{0} % removes header numbering but not bookmarks
 \usepackage{titlesec} % allows changing of headings
 \titleformat*{\section}{\bfseries} % makes \section like normal text but bold
@@ -44,6 +44,7 @@
   \section{{#1}}
   \hrule
   \vspace{\GapTwo} % gap to account for \hrule (one column list only)
+  %\vspace{-\GapTwo}% gap to pull bullets closer (two column list only)
 }
 
 \newcommand{\school}[4]{ % use for a level 2 item that is a school; inputs are school name, major, graduation date, GPA
@@ -54,13 +55,15 @@
 
 \newcommand{\entry}[4]{ % use for a level 2 item; inputs are company, position, location, dates
   \vspace{\GapTwo} % gap to account for \hrule
-  \textbf{{#1}}\\ % company
-  \textit{#2} \textit{(#3)} \hfill {#4} % position, location, dates
+  \vbox{
+    \textbf{{#1}} \hfill {#3}\\ % company
+    \textit{#2} \hfill \textit{#4} % position, location, dates
+  }
 }
 
-\newcommand{\role}[3]{ % use for continuing a level 2 item; inputs are position, location, dates
+\newcommand{\role}[2]{ % use for continuing a level 2 item; inputs are position, dates
   \vspace{\GapTwo} % gap to account for \hrule
-  \textit{#1} \textit{(#2)} \hfill {#3} % position, location, dates
+  \textit{#1} \hfill \textit{#2} % position, location, dates
 }
 
 
@@ -118,10 +121,10 @@
 
 \begin{table}
 \begin{tabularx}{\hsize}[t]{@{}Xr@{}}
-\multirow{1}{*}[\shiftdown]{\Huge\bfseries \name} & \addressone\\
+\multirow{4}{*}[\shiftdown]{\Huge\bfseries \name} & \addressone\\
 & \addresstwo\\
-& \phone\\
-& \email\
+& \email\\
+& \phone\
 \end{tabularx}
 \end{table}
 
@@ -150,6 +153,7 @@
 
 \sect{EXPERIENCE}
 
+\vbox{
 \entry{company name}
 {your title}
 {company location}
@@ -157,6 +161,15 @@
 \begin{itemize}
 \item more details
 \end{itemize}
+}
+
+\vbox{
+\role{your title}
+{dates worked}
+\begin{itemize}
+\item more details
+\end{itemize}
+}
 
 
 \sectlist{SKILLS}
@@ -168,6 +181,7 @@
 
 \sect{ACTIVITIES}
 
+\vbox{
 \entry{activity name}
 {your role}
 {activity location}
@@ -175,6 +189,7 @@
 \begin{itemize}
 \item more details
 \end{itemize}
+}
 
 
 \end{document}
