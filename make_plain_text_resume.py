@@ -85,7 +85,7 @@ for i, line in enumerate(ActiveFileR):
         # Entries
         entries = ['entry', 'school']
         for entry in entries:
-            p = re.compile(r'[^\\]*\\' + entry +'\{([^}]*)\}')  # finds initial spaces, backslash, header, open bracket, text, close braket
+            p = re.compile(r'[^\\]*\\' + entry +'\{([^}]*)\}.*\n')  # finds initial spaces, backslash, header, open bracket, text, close braket
             if p.search(newline):
                 newline = p.sub(r'\n\1\n', newline)  # print only text from above
                 company = newline
@@ -93,13 +93,12 @@ for i, line in enumerate(ActiveFileR):
                 print_line_counter = 3
 
         # Roles
-        p = re.compile(r'[^\\]*\\' + 'role' +'\{([^}]*)\}')  # finds initial spaces, backslash, header, open bracket, text, close braket
+        p = re.compile(r'[^\\]*\\' + 'role' +'\{([^}]*)\}.*\n')  # finds initial spaces, backslash, header, open bracket, text, close braket
         if p.search(newline):
             ActiveFileW.write(company[:-1])
             newline = p.sub(r'\n\1\n', newline)  # print only text from above
-            ActiveFileW.write(newline[:-1])
+            ActiveFileW.write(newline)
             ActiveFileW.write(location)
-            print_line = True
             print_line_counter = 1
             continue
 
