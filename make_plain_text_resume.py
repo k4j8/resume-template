@@ -53,7 +53,7 @@ for i, line in enumerate(ActiveFileR):
                 print_line = True
 
         # Remove comments
-        p = re.compile(r'[^\\]%.*|^%.*')
+        p = re.compile(r'(?!\\)%.*|^%.*')
         if p.search(newline):
             newline = p.sub(r'', newline)
 
