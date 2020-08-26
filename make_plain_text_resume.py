@@ -21,11 +21,14 @@ def RemoveBrackets(newline):
 
 
 ActiveFileR = open(file_path, 'r')  # LaTeX resume
-ActiveFileW = open(file_path[:len(file_path)-4] + '.txt', 'w')  # plain text resume to save as
+plain_text_filepath = file_path[:len(file_path)-4] + '.txt'
+ActiveFileW = open(plain_text_filepath, 'w')  # plain text resume to save as
 
 document_start = False  # becomes true after reaching \begin{document}
 print_line_counter = 0  # indicates how many lines should be printed without consideration
 line_count_down = 0  # indicates how many lines to wait before printing a line without consideration
+
+print('Making plain text resume from "{}"...'.format(file_path))
 
 for i, line in enumerate(ActiveFileR):
 
@@ -113,3 +116,5 @@ for i, line in enumerate(ActiveFileR):
 
         if print_line:
             ActiveFileW.write(newline)
+
+print('Complete. Plain-text resume available at "{}"'.format(plain_text_filepath))
